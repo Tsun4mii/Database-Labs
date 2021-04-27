@@ -57,7 +57,7 @@ CREATE index #temp_table_1_nonclu on #temp_table_1(some_ind, cc)
 drop table #temp_table_1
 
 --3 
-drop table #temp_table_2
+
 create table #temp_table_2
 (
 	some_ind int, 
@@ -66,7 +66,7 @@ create table #temp_table_2
 )
 SET nocount on;
 DECLARE @k int = 0;
-while @k < 20000
+while @k < 30000
 begin
 	insert #temp_table_2(some_ind, some_field)
 		values(FLOOR(RAND()*30000), REPLICATE('test2',3) );
@@ -116,3 +116,4 @@ FROM sys.dm_db_index_physical_stats(DB_ID(N'TEMPDB'), OBJECT_ID(N'#temp_table_2'
        where name is not null;
 
 drop index #temp_table_2_ind1 on #temp_table_2
+drop table #temp_table_2
